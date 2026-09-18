@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+function isPalindrome(string $text): bool
+{
+    $text = mb_strtolower($text, 'UTF-8');
+
+    $normalized = preg_replace('/[^\p{L}\p{N}]/u', '', $text);
+
+    if ($normalized === null) {
+        return false;
+    }
+
+    return $normalized === reverseString($normalized);
+}
+
+function reverseString(string $text): string
+{
+    $characters = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
+
+    if ($characters === false) {
+        return '';
+    }
+
+    return implode('', array_reverse($characters));
+}
